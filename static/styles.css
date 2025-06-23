@@ -1,166 +1,161 @@
-body {
+/* Reset básico */
+* {
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
-    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
 }
 
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+/* Containers principais (Cards) */
 .container, .perfil-box, .ranking-box {
-    background-color: white;
-    margin: 20px auto;
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 420px;
+    margin: 20px 0;
     padding: 20px;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
+/* Títulos */
 h1, h2, h3 {
-    color: #333;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.5em;
 }
 
-a.botao, button, input[type="submit"] {
+/* Labels e textos */
+p, label {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    display: block;
+    text-align: left;
+}
+
+/* Inputs e Selects */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+}
+
+/* Botões e links que parecem botões */
+input[type="submit"],
+button,
+a.botao {
     display: block;
     width: 100%;
-    margin: 10px 0;
-    padding: 12px;
-    background-color: #4CAF50;
+    padding: 14px;
+    margin-top: 10px;
+    background-color: #28a745;
     color: white;
-    text-decoration: none;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
+    font-size: 1.1em;
+    text-decoration: none;
     cursor: pointer;
-    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
-a.botao:hover, button:hover, input[type="submit"]:hover {
-    background-color: #45a049;
+input[type="submit"]:hover,
+button:hover,
+a.botao:hover {
+    background-color: #218838;
 }
 
+/* Tabelas (Ranking, Jogos) */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 15px;
+    margin-top: 10px;
+    font-size: 1em;
 }
 
-table th, table td {
-    padding: 10px;
+th, td {
+    padding: 12px;
     border-bottom: 1px solid #ddd;
+    text-align: center;
 }
 
+th {
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Menu Hamburguer (placeholder caso você queira implementar JS depois) */
 .menu-button {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     cursor: pointer;
-    border: 1px solid #ccc;
-    padding: 8px;
-    border-radius: 5px;
-    background-color: #ffffff;
 }
 
 .menu-items {
     display: none;
     position: absolute;
-    top: 50px;
-    right: 15px;
+    top: 60px;
+    right: 10px;
     background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     z-index: 1000;
 }
 
 .menu-items a {
     display: block;
     padding: 10px;
-    text-decoration: none;
     color: #333;
+    text-decoration: none;
 }
 
 .menu-items a:hover {
     background-color: #f0f0f0;
 }
 
-input[type="text"], input[type="number"], select {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+/* Responsividade extra para telas bem pequenas */
+@media (max-width: 500px) {
+    .container, .perfil-box, .ranking-box {
+        padding: 15px;
+        margin: 10px 0;
+    }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f7f9;
-    margin: 0;
-    padding: 20px;
-}
+    h1, h2, h3 {
+        font-size: 1.3em;
+    }
 
-.container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    max-width: 600px;
-    margin: auto;
-}
+    input, button, select, a.botao {
+        font-size: 1em;
+        padding: 12px;
+    }
 
-h2 {
-    text-align: center;
-    color: #333;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
-
-th, td {
-    border-bottom: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-}
-
-th {
-    background-color: #f0f0f0;
-}
-
-tr:hover {
-    background-color: #f9f9f9;
-}
-
-.botao, input[type="submit"] {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    text-align: center;
-    text-decoration: none;
-}
-
-.botao:hover, input[type="submit"]:hover {
-    background-color: #218838;
-}
-
-select, input[type="number"], input[type="text"], input[type="email"] {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0 15px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
+    th, td {
+        padding: 10px;
+        font-size: 0.95em;
+    }
 }
