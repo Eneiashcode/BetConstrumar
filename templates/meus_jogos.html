@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Meus Jogos - BetConstrumar</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>🏅 Meus Jogos</h2>
+        <p>Jogador: {{ nome }}</p>
+
+        {% if jogos %}
+            <ul>
+                {% for jogo in jogos %}
+                    <li style="margin-bottom: 15px;">
+                        <strong>{{ jogo.jogadorA }} vs {{ jogo.jogadorB }}</strong><br>
+
+                        {% if jogo.vencedor %}
+                            ✅ <strong>Vencedor:</strong> {{ jogo.vencedor }}
+                        {% else %}
+                            <form action="/meus_jogos" method="post" style="margin-top: 5px;">
+                                <input type="hidden" name="jogo_id" value="{{ jogo.id }}">
+
+                                <label for="vencedor_{{ loop.index }}">Vencedor:</label>
+                                <select name="vencedor" id="vencedor_{{ loop.index }}" required>
+                                    <option value="{{ jogo.jogadorA }}">{{ jogo.jogadorA }}</option>
+                                    <option value="{{ jogo.jogadorB }}">{{ jogo.jogadorB }}</option>
+                                </select>
+
+                                <button type="submit">Salvar Resultado</button>
+                            </form>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nenhum jogo encontrado.</p>
+        {% endif %}
+
+        <br>
+        <a href="/perfil">⬅️ Voltar ao Perfil</a>
+    </div>
+</body>
+</html>

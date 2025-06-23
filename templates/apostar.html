@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Fazer uma Aposta - BetConstrumar</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>💰 Fazer uma Aposta</h2>
+
+        <p><strong>Saldo disponível:</strong> {{ usuario.moedas }} moedas</p>
+
+        {% if jogos %}
+            <form action="/apostar" method="post">
+                <label for="jogo_id">Selecione o Jogo:</label>
+                <select name="jogo_id" id="jogo_id" required onchange="atualizarOpcoesPalpite()">
+                    {% for jogo in jogos %}
+                        <option value="{{ jogo.id }}">{{ jogo.jogadorA }} vs {{ jogo.jogadorB }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="palpite">Seu Palpite:</label>
+                <select name="palpite" id="palpite" required>
+                    {% if jogos|length > 0 %}
+                        <option value="{{ jogos[0].jogadorA }}">{{ jogos[0].jogadorA }}</option>
+                        <option value="{{ jogos[0].jogadorB }}">{{ jogos[0].jogadorB }}</option>
+                    {% endif %}
+                </select>
+
+                <label for="quantidade_moedas">Quantas moedas deseja apostar?</label>
+                <input type="number" name="quantidade_moedas" id="quantidade_moedas" min="1" max="{{ usuario.moedas }}" value="1" required>
+
+                <button type="submit">💸 Registrar Aposta</button>
+            </form>
+        {% else %}
+            <p>❌ Nenhum jogo disponível para aposta no momento.</p>
+        {% endif %}
+
+        <br>
+        <a href="/perfil">⬅️ Voltar ao Perfil</a>
+
+        <script>
+            const jogos = {{ jogos | tojson }};
+
+            function atualizarOpcoesPalpite() {
+                const jogoSelect = document.getElementById('jogo_id');
+                const palpiteSelect = document.getElementById('palpite');
+                const index = jogoSelect.selectedIndex;
+                const jogoSelecionado = jogos[index];
+
+                palpiteSelect.innerHTML = `
+                    <option value="${jogoSelecionado.jogadorA}">${jogoSelecionado.jogadorA}</option>
+                    <option value="${jogoSelecionado.jogadorB}">${jogoSelecionado.jogadorB}</option>
+                `;
+            }
+        </script>
+    </div>
+</body>
+</html>

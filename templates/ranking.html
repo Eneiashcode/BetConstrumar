@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Ranking - BetConstrumar</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container ranking-box">
+        <h2>🏅 Ranking Oficial - BetConstrumar</h2>
+
+        <table>
+            <tr>
+                <th>Posição</th>
+                <th>Nome</th>
+                <th>Acertos</th>
+                <th>Moedas</th>
+            </tr>
+            {% for jogador in ranking %}
+                <tr>
+                    <td>{{ loop.index }}º</td>
+                    <td>{{ jogador.nome }}</td>
+                    <td>{{ jogador.acertos }}</td>
+                    <td>{{ jogador.moedas }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <br>
+        <a href="/perfil">⬅️ Voltar ao Perfil</a>
+    </div>
+</body>
+</html>

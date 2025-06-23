@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Incluir Novo Jogo</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h2>➕ Incluir Novo Jogo</h2>
+
+    <form action="/incluir_jogo" method="post">
+        <label for="jogadorA">Jogador A:</label><br>
+        <input type="text" id="jogadorA" name="jogadorA" required><br><br>
+
+        <label for="jogadorB">Jogador B:</label><br>
+        <input type="text" id="jogadorB" name="jogadorB" required><br><br>
+
+        <button type="submit">Cadastrar Jogo</button>
+    </form>
+
+    <br>
+    <a href="/">⬅️ Voltar para Home</a>
+</body>
+</html>

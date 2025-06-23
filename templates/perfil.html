@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil - BetConstrumar</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container perfil-box">
+        <h2>👤 Perfil do Jogador</h2>
+
+        <p><strong>Nome:</strong> {{ nome }}</p>
+        <p><strong>E-mail:</strong> {{ email }}</p>
+
+        <p><strong>💰 Saldo de Moedas:</strong> {{ moedas }} moedas</p>
+        <p><strong>📌 Estimativa de PIX se terminar assim:</strong> R$ {{ valor_pix }}</p>
+
+        <h3>📋 Ações disponíveis:</h3>
+        <a class="botao" href="/incluir_jogo">➕ Incluir Novo Jogo</a>
+        <a class="botao" href="/jogos">🎾 Ver Lista de Jogos</a>
+        <a class="botao" href="/apostar">🥇 Fazer uma Aposta</a>
+        <a class="botao" href="/meus_jogos">🏅 Meus Jogos (Informar Resultado)</a>
+        <a class="botao" href="/ranking">🏆 Ver Ranking Oficial</a>
+        <a class="botao" href="/logout">🚪 Logout</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Jogos - BetConstrumar</title>
+</head>
+<body>
+    <h2>🎾 Lista de Jogos Cadastrados</h2>
+
+    {% if jogos %}
+        <ul>
+        {% for jogo in jogos %}
+            <li>{{ jogo.jogadorA }} vs {{ jogo.jogadorB }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhum jogo cadastrado.</p>
+    {% endif %}
+
+    <br>
+    <a href="/incluir_jogo">➕ Incluir Novo Jogo</a>
+    <br>
+    <a href="/perfil">⬅️ Voltar ao Perfil</a>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>BET Construmar - Home</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h2>🏠 BET Construmar - Jogos Disponíveis para Apostar</h2>
+
+    <a href="/incluir_jogo">➕ Incluir Novo Jogo</a>
+    <br><br>
+
+    {% if jogos %}
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>Jogador A</th>
+                <th>Jogador B</th>
+                <th>Data de Inclusão</th>
+            </tr>
+            {% for jogo in jogos %}
+            <tr>
+                <td>{{ jogo.jogadorA }}</td>
+                <td>{{ jogo.jogadorB }}</td>
+                <td>{{ jogo.data_criacao }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Nenhum jogo disponível no momento.</p>
+    {% endif %}
+
+    <br>
+    <a href="/perfil">⬅️ Voltar ao Perfil</a>
+</body>
+</html>
