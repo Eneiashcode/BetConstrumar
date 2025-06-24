@@ -32,30 +32,29 @@
                 <label for="quantidade_moedas">Quantas moedas deseja apostar?</label>
                 <input type="number" name="quantidade_moedas" id="quantidade_moedas" min="1" max="{{ usuario.moedas }}" value="1" required>
 
-                <button type="submit">💸 Registrar Aposta</button>
+                <button type="submit" class="caixa-acao">💸 Registrar Aposta</button>
             </form>
         {% else %}
             <p>❌ Nenhum jogo disponível para aposta no momento.</p>
         {% endif %}
 
-        <br>
-        <a href="/perfil">⬅️ Voltar ao Perfil</a>
-
-        <script>
-            const jogos = {{ jogos | tojson }};
-
-            function atualizarOpcoesPalpite() {
-                const jogoSelect = document.getElementById('jogo_id');
-                const palpiteSelect = document.getElementById('palpite');
-                const index = jogoSelect.selectedIndex;
-                const jogoSelecionado = jogos[index];
-
-                palpiteSelect.innerHTML = `
-                    <option value="${jogoSelecionado.jogadorA}">${jogoSelecionado.jogadorA}</option>
-                    <option value="${jogoSelecionado.jogadorB}">${jogoSelecionado.jogadorB}</option>
-                `;
-            }
-        </script>
+        <a href="/perfil" class="caixa-acao">⬅️ Voltar ao Perfil</a>
     </div>
+
+    <script>
+        const jogos = {{ jogos | tojson }};
+
+        function atualizarOpcoesPalpite() {
+            const jogoSelect = document.getElementById('jogo_id');
+            const palpiteSelect = document.getElementById('palpite');
+            const index = jogoSelect.selectedIndex;
+            const jogoSelecionado = jogos[index];
+
+            palpiteSelect.innerHTML = `
+                <option value="${jogoSelecionado.jogadorA}">${jogoSelecionado.jogadorA}</option>
+                <option value="${jogoSelecionado.jogadorB}">${jogoSelecionado.jogadorB}</option>
+            `;
+        }
+    </script>
 </body>
 </html>

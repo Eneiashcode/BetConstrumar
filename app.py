@@ -8,6 +8,10 @@ app.secret_key = 'chave_secreta_simples'
 
 db = iniciar_firebase()
 
+@app.route('/boas_vindas')
+def boas_vindas():
+    return render_template('boas_vindas.html')
+
 @app.route('/')
 def home():
     return redirect(url_for('login'))
@@ -39,11 +43,13 @@ def login():
                 'acertos': 0
             })
 
+        # Salvar sessão
         session['usuario_id'] = user_id
         session['nome'] = nome
         session['email'] = email
 
-        return redirect('/perfil')
+        # ✅ Agora o fluxo vai para a página de boas-vindas:
+        return redirect('/boas_vindas')
 
     return render_template('login.html')
 

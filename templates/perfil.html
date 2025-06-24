@@ -10,19 +10,23 @@
     <div class="container perfil-box">
         <h2>👤 Perfil do Jogador</h2>
 
-        <p><strong>Nome:</strong> {{ nome }}</p>
-        <p><strong>E-mail:</strong> {{ email }}</p>
-
-        <p><strong>💰 Saldo de Moedas:</strong> {{ moedas }} moedas</p>
-        <p><strong>📌 Estimativa de PIX se terminar assim:</strong> R$ {{ valor_pix }}</p>
+        <div class="dados-jogador">
+            <p><strong>👤 Nome:</strong> {{ nome }}</p>
+            <p><strong>📧 E-mail:</strong> {{ email }}</p>
+            <p class="destaque-saldo">🥇 <strong>Saldo de Moedas:</strong> {{ moedas }} moedas</p>
+            <p class="destaque-pix">📌 <strong>Valor previsto do Pix:</strong> R$ {{ valor_pix }}</p>
+        </div>
 
         <h3>📋 Ações disponíveis:</h3>
-        <a class="botao" href="/incluir_jogo">➕ Incluir Novo Jogo</a>
-        <a class="botao" href="/jogos">🎾 Ver Lista de Jogos</a>
-        <a class="botao" href="/apostar">🥇 Fazer uma Aposta</a>
-        <a class="botao" href="/meus_jogos">🏅 Meus Jogos (Informar Resultado)</a>
-        <a class="botao" href="/ranking">🏆 Ver Ranking Oficial</a>
-        <a class="botao" href="/logout">🚪 Logout</a>
+
+        <div class="acoes-container">
+            <a href="/incluir_jogo" class="caixa-acao">➕ Incluir Novo Jogo</a>
+            <a href="/jogos" class="caixa-acao">🎾 Ver Lista de Jogos</a>
+            <a href="/apostar" class="caixa-acao">🥇 Fazer uma Aposta</a>
+            <a href="/meus_jogos" class="caixa-acao">🏅 Meus Jogos (Informar Resultado)</a>
+            <a href="/ranking" class="caixa-acao">🏆 Ver Ranking Oficial</a>
+            <a href="/logout" class="caixa-acao">🚪 Logout</a>
+        </div>
     </div>
 </body>
 </html>
