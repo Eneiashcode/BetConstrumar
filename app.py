@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session, url_for
 from firebase_config import iniciar_firebase
 from utils.moedas import MOEDAS_POR_JOGADOR, calcular_valor_pix
 import re
+from google.cloud import firestore
 
 app = Flask(__name__)
 app.secret_key = 'chave_secreta_simples'
@@ -10,7 +11,14 @@ db = iniciar_firebase()
 
 @app.route('/boas_vindas')
 def boas_vindas():
-    return render_template('boas_vindas.html')
+    bola_davez = obter_bola_da_vez()
+    print("[DEBUG] Bola da Vez:", bola_davez)  # Adicione isso temporariamente
+    return render_template("boas_vindas.html", bola_davez=bola_davez)
+
+
+@app.route('/home')
+def home_redirect():
+    return redirect(url_for('boas_vindas'))
 
 @app.route('/')
 def home():
@@ -132,6 +140,7 @@ def apostar():
 
     usuario = usuario_doc.to_dict()
 
+    # Buscar todos os jogos ainda sem vencedor
     jogos_ref = db.collection('jogos').where('vencedor', '==', None).stream()
     jogos = []
     for doc in jogos_ref:
@@ -150,11 +159,24 @@ def apostar():
         if usuario['moedas'] < quantidade_moedas:
             return "Saldo insuficiente."
 
+        # Atualiza saldo e total de apostas do usuário
         usuario_ref.update({
             'moedas': usuario['moedas'] - quantidade_moedas,
-            'total_apostas': usuario['total_apostas'] + 1
+            'total_apostas': usuario.get('total_apostas', 0) + 1
         })
 
+        # Atualiza histórico (agora com firestore.ArrayUnion para acumular)
+        nova_aposta = {
+            'jogo_id': jogo_id,
+            'palpite': palpite,
+            'quantidade_moedas': quantidade_moedas
+        }
+
+        usuario_ref.update({
+            'historico': firestore.ArrayUnion([nova_aposta])
+        })
+
+        # Registra aposta na coleção "apostas"
         db.collection('apostas').add({
             'usuario_id': user_id,
             'jogo_id': jogo_id,
@@ -236,6 +258,64 @@ def ranking():
 def logout():
     session.clear()
     return redirect('/login')
+
+def obter_bola_da_vez():
+    jogos_mais_apostados = {}
+    jogo_detalhes_cache = {}
+
+    # Buscar todos os usuários
+    usuarios_ref = db.collection('usuarios').stream()
+
+    for usuario in usuarios_ref:
+        dados = usuario.to_dict()
+        historico = dados.get('historico', [])
+
+        # Percorrer cada aposta feita por esse usuário
+        for aposta in historico:
+            jogo_id = aposta.get('jogo_id')
+            if not jogo_id:
+                continue
+
+            # Contabiliza apostas por jogo
+            jogos_mais_apostados[jogo_id] = jogos_mais_apostados.get(jogo_id, 0) + 1
+
+    if not jogos_mais_apostados:
+        return None  # Nenhuma aposta registrada
+
+    # Encontrar o jogo mais apostado
+    jogo_mais_apostado_id = max(jogos_mais_apostados, key=jogos_mais_apostados.get)
+    total_apostas = jogos_mais_apostados[jogo_mais_apostado_id]
+
+    # Buscar os detalhes do jogo mais apostado
+    jogo_doc = db.collection('jogos').document(jogo_mais_apostado_id).get()
+
+    if jogo_doc.exists:
+        jogo = jogo_doc.to_dict()
+        return {
+            'id': jogo_mais_apostado_id,
+            'jogadorA': jogo.get('jogadorA', 'Jogador A'),
+            'jogadorB': jogo.get('jogadorB', 'Jogador B'),
+            'total_apostas': total_apostas
+        }
+
+    return None
+
+@app.route('/resetar_sistema', methods=['POST'])
+def resetar_sistema():
+    email_logado = session.get('email')
+
+    if email_logado != 'edias.dias@terra.com.br':
+        return "Acesso não autorizado", 403
+
+    # Apagar jogos e apostas
+    for colecao in ['jogos', 'apostas']:
+        docs = db.collection(colecao).stream()
+        for doc in docs:
+            doc.reference.delete()
+
+    return redirect('/perfil')  # ou /home se preferir
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

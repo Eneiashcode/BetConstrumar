@@ -3,24 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogos - BetConstrumar</title>
+    <title>Lista de Jogos - BetConstrumar</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <h2>🎾 Lista de Jogos Cadastrados</h2>
+    <div class="container lista-jogos-box">
+        <h2>🎾 Lista de Jogos Cadastrados</h2>
 
-    {% if jogos %}
-        <ul>
-        {% for jogo in jogos %}
-            <li>{{ jogo.jogadorA }} vs {{ jogo.jogadorB }}</li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>Nenhum jogo cadastrado.</p>
-    {% endif %}
+        <div class="lista-jogos">
+            {% for jogo in jogos %}
+                <div class="card-jogo">
+                    <span class="icone-jogo">🎮</span>
+                    <span class="texto-jogo">{{ jogo.jogadorA }} <strong>vs</strong> {{ jogo.jogadorB }}</span>
+                </div>
+            {% endfor %}
+        </div>
 
-    <br>
-    <a href="/incluir_jogo">➕ Incluir Novo Jogo</a>
-    <br>
-    <a href="/perfil">⬅️ Voltar ao Perfil</a>
+        <div class="acoes-jogos">
+            <a href="/incluir_jogo" class="botao-secundario">➕ Incluir Novo Jogo</a>
+            <a href="/perfil" class="botao-secundario">⬅️ Voltar ao Perfil</a>
+        </div>
+    </div>
 </body>
 </html>

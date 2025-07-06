@@ -1,59 +1,97 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bem-vindo ao BetConstrumar</title>
-    <link rel="stylesheet" href="/static/styles.css">
-    <style>
-        body {
-            background-color: #f0f0f0;  /* Cinza em tudo */
-            min-height: 100vh;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bem-vindo ao BetOldSchool</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <style>
+    body {
+      background-color: #f0f0f0;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        .container {
-            text-align: center;
-            padding: 20px;
-        }
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 450px;
+      width: 90%;
+    }
 
-        .logo-bem-vindo {
-            max-width: 220px;
-            height: auto;
-            margin-bottom: 20px;
-        }
+    .titulo-logo {
+      font-size: 2.7em;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
 
-        h1 {
-            color: #2c3e50;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-        }
+    .subtitulo {
+      font-size: 1.1em;
+      color: #666;
+      margin-bottom: 30px;
+    }
 
-        .botao {
-            display: inline-block;
-            background-color: #28a745;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 1.1em;
-            transition: background-color 0.3s ease;
-        }
+    .botao {
+      display: inline-block;
+      background-color: #28a745;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1.1em;
+      transition: background-color 0.3s ease;
+      margin-bottom: 30px;
+    }
 
-        .botao:hover {
-            background-color: #218838;
-        }
-    </style>
+    .botao:hover {
+      background-color: #218838;
+    }
+
+    .bola-davez-box {
+      background-color: #fff8e1;
+      border: 2px solid #ffc107;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .bola-davez-box h2 {
+      margin-top: 0;
+      color: #ff9800;
+      font-size: 1.4em;
+    }
+
+    .bola-davez-box p {
+      margin: 5px 0;
+      color: #333;
+      font-size: 1.05em;
+    }
+  </style>
 </head>
 <body>
-    <div class="container boas-vindas">
-        <img src="/static/logo_betconstrumar.png" alt="Logo BetConstrumar" class="logo-bem-vindo">
-        <h1>Bem-vindo ao<br>BetConstrumar!</h1>
-        <a href="/perfil" class="botao">🎮 Iniciar</a>
+  <div class="container">
+    <div class="titulo-logo">🎾 BetOldSchool</div>
+
+    <a href="/perfil" class="botao">🎮 Iniciar</a>
+
+    {% if bola_davez %}
+    <div class="bola-davez-box">
+      <h2>🏐 Bola da Vez</h2>
+      <p><strong>{{ bola_davez.jogadorA }}</strong> vs <strong>{{ bola_davez.jogadorB }}</strong></p>
+      <p>🔥 {{ bola_davez.total_apostas }} aposta{{ 's' if bola_davez.total_apostas > 1 else '' }} registrada{{ 's' if bola_davez.total_apostas > 1 else '' }}!</p>
     </div>
+    {% else %}
+    <p style="margin-top: 20px;">Nenhuma aposta registrada ainda.</p>
+    {% endif %}
+  </div>
 </body>
 </html>

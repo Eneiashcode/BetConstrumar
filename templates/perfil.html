@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil - BetConstrumar</title>
+    <title>Perfil - BetOldSchool</title>
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
@@ -27,6 +27,15 @@
             <a href="/ranking" class="caixa-acao">🏆 Ver Ranking Oficial</a>
             <a href="/logout" class="caixa-acao">🚪 Logout</a>
         </div>
+
+        <!-- Botão de reset visível apenas para o administrador -->
+        {% if email == 'edias.dias@terra.com.br' %}
+            <form action="/resetar_sistema" method="post" onsubmit="return confirm('Tem certeza que deseja resetar os jogos e apostas?');">
+                <button type="submit" class="botao-reset">🔄 Resetar Sistema</button>
+            </form>
+        {% endif %}
     </div>
+
+    <a href="/home" class="botao-voltar-home">🏠 Ir para Home</a>
 </body>
 </html>
