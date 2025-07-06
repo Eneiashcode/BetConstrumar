@@ -23,7 +23,7 @@
       border-radius: 15px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       text-align: center;
-      max-width: 450px;
+      max-width: 500px;
       width: 90%;
     }
 
@@ -32,12 +32,6 @@
       font-weight: bold;
       color: #2c3e50;
       margin-bottom: 10px;
-    }
-
-    .subtitulo {
-      font-size: 1.1em;
-      color: #666;
-      margin-bottom: 30px;
     }
 
     .botao {
@@ -62,6 +56,7 @@
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
     }
 
     .bola-davez-box h2 {
@@ -75,12 +70,48 @@
       color: #333;
       font-size: 1.05em;
     }
+
+    /* Modal Tutorial */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 10px;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover, .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="titulo-logo">🎾 BetOldSchool</div>
-
     <a href="/perfil" class="botao">🎮 Iniciar</a>
 
     {% if bola_davez %}
@@ -93,74 +124,36 @@
     <p style="margin-top: 20px;">Nenhuma aposta registrada ainda.</p>
     {% endif %}
   </div>
+
+  <!-- Modal de Tutorial -->
+  <div id="tutorialModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="fecharTutorial()">&times;</span>
+      <h2>✨ Bem-vindo ao BetOldSchool!</h2>
+      <p>Veja abaixo como funciona o sistema:</p>
+      <ul>
+        <li><strong>➕ Incluir Novo Jogo:</strong> Cadastre partidas que serão jogadas.</li>
+        <li><strong>🎾 Ver Lista de Jogos:</strong> Veja todos os jogos pendentes de resultado.</li>
+        <li><strong>🥇 Fazer uma Aposta:</strong> Escolha um jogo, aposte suas moedas no vencedor!</li>
+        <li><strong>🏅 Meus Jogos:</strong> Se você criou o jogo, informe o resultado após a partida.</li>
+        <li><strong>🏆 Ver Ranking Oficial:</strong> Veja a classificação dos apostadores.</li>
+        <li><strong>📌 Bola da Vez:</strong> Destaque do jogo mais apostado da rodada.</li>
+      </ul>
+      <p>Boa sorte e divirta-se apostando com responsabilidade! 🏆</p>
+    </div>
+  </div>
+
+  <script>
+    function fecharTutorial() {
+      document.getElementById("tutorialModal").style.display = "none";
+      localStorage.setItem("tutorialVisto", "true");
+    }
+
+    window.onload = function () {
+      if (!localStorage.getItem("tutorialVisto")) {
+        document.getElementById("tutorialModal").style.display = "block";
+      }
+    };
+  </script>
 </body>
 </html>
-
-<!-- Adicione isso ao perfil.html ou boas_vindas.html -->
-<div id="tutorialModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="fecharTutorial()">&times;</span>
-    <h2>✨ Bem-vindo ao BetOldSchool!</h2>
-    <p>Veja abaixo como funciona o sistema:</p>
-
-    <ul>
-      <li><strong>➕ Incluir Novo Jogo:</strong> Cadastre partidas que serão jogadas.</li>
-      <li><strong>🎾 Ver Lista de Jogos:</strong> Veja todos os jogos pendentes de resultado.</li>
-      <li><strong>🏅 Fazer uma Aposta:</strong> Escolha um jogo, aposte suas moedas no vencedor!</li>
-      <li><strong>🏆 Meus Jogos:</strong> Se você criou o jogo, informe o resultado após a partida.</li>
-      <li><strong>🏆 Ver Ranking Oficial:</strong> Veja a classificação de quem mais acertou!</li>
-      <li><strong>📋 Bola da Vez:</strong> Destaque do jogo com mais apostas registradas.</li>
-    </ul>
-
-    <p>Boa sorte e divirta-se apostando com responsabilidade! ⚽</p>
-  </div>
-</div>
-
-<style>
-.modal {
-  display: block; /* Use 'none' para esconder depois */
-  position: fixed;
-  z-index: 999;
-  padding-top: 60px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-.modal-content {
-  background-color: #fff;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 90%;
-  max-width: 500px;
-  border-radius: 10px;
-  font-family: 'Segoe UI';
-}
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-.close:hover, .close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-</style>
-
-<script>
-function fecharTutorial() {
-  document.getElementById("tutorialModal").style.display = "none";
-  localStorage.setItem("tutorialVisto", "true");
-}
-
-window.onload = function() {
-  if (!localStorage.getItem("tutorialVisto")) {
-    document.getElementById("tutorialModal").style.display = "block";
-  }
-};
-</script>

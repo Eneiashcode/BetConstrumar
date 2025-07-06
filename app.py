@@ -3,11 +3,22 @@ from firebase_config import iniciar_firebase
 from utils.moedas import MOEDAS_POR_JOGADOR, calcular_valor_pix
 import re
 from google.cloud import firestore
+from flask import send_from_directory
+
 
 app = Flask(__name__)
 app.secret_key = 'chave_secreta_simples'
 
 db = iniciar_firebase()
+
+@app.route('/manifest.json')
+def manifest():
+    return send_from_directory('static', 'manifest.json', mimetype='application/json')
+
+@app.route('/service-worker.js')
+def service_worker():
+    return send_from_directory('static', 'service-worker.js', mimetype='application/javascript')
+
 
 @app.route('/boas_vindas')
 def boas_vindas():
