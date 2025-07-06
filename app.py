@@ -300,20 +300,41 @@ def obter_bola_da_vez():
 
     return None
 
-@app.route('/resetar_sistema', methods=['POST'])
+
+@app.route('/resetar_sistema', methods=['POST', 'GET'])
 def resetar_sistema():
-    email_logado = session.get('email')
+    user_id = session.get('usuario_id')
+    if not user_id:
+        return redirect('/login')
 
-    if email_logado != 'edias.dias@terra.com.br':
-        return "Acesso não autorizado", 403
+    usuario_doc = db.collection('usuarios').document(user_id).get()
+    if not usuario_doc.exists:
+        return redirect('/login')
 
-    # Apagar jogos e apostas
-    for colecao in ['jogos', 'apostas']:
-        docs = db.collection(colecao).stream()
-        for doc in docs:
-            doc.reference.delete()
+    dados = usuario_doc.to_dict()
+    email = dados.get('email', '')
 
-    return redirect('/perfil')  # ou /home se preferir
+    if email != 'edias.dias@terra.com.br':
+        return "Acesso não autorizado.", 403
+
+    # Zerar dados de todos os usuários
+    usuarios_ref = db.collection('usuarios').stream()
+    for doc in usuarios_ref:
+        doc_ref = db.collection('usuarios').document(doc.id)
+        doc_ref.update({
+            'acertos': 0,
+            'total_apostas': 0,
+            'moedas': 100,
+            'historico': []
+        })
+
+    # Limpar coleção de apostas
+    apostas_ref = db.collection('apostas').stream()
+    for aposta in apostas_ref:
+        db.collection('apostas').document(aposta.id).delete()
+
+    print("[INFO] Sistema resetado com sucesso.")
+    return redirect('/perfil')
 
 
 
