@@ -301,7 +301,7 @@ def obter_bola_da_vez():
     return None
 
 
-@app.route('/resetar_sistema', methods=['POST', 'GET'])
+@app.route('/resetar_sistema', methods=['GET', 'POST'])
 def resetar_sistema():
     user_id = session.get('usuario_id')
     if not user_id:
@@ -317,7 +317,7 @@ def resetar_sistema():
     if email != 'edias.dias@terra.com.br':
         return "Acesso não autorizado.", 403
 
-    # Zerar dados de todos os usuários
+    # Zerar dados dos usuários
     usuarios_ref = db.collection('usuarios').stream()
     for doc in usuarios_ref:
         doc_ref = db.collection('usuarios').document(doc.id)
@@ -328,15 +328,18 @@ def resetar_sistema():
             'historico': []
         })
 
-    # Limpar coleção de apostas
+    # Limpar apostas
     apostas_ref = db.collection('apostas').stream()
     for aposta in apostas_ref:
         db.collection('apostas').document(aposta.id).delete()
 
+    # Limpar jogos
+    jogos_ref = db.collection('jogos').stream()
+    for jogo in jogos_ref:
+        db.collection('jogos').document(jogo.id).delete()
+
     print("[INFO] Sistema resetado com sucesso.")
     return redirect('/perfil')
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
